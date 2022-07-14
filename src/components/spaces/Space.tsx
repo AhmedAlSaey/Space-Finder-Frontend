@@ -6,14 +6,14 @@ interface SpaceProps {
     spaceId: string,
     name: string,
     location: string,
-    photoUrl?: string,
+    photoURL?: string,
     reserveSpace: (spaceId: string) => void
 }
 
 export class Space extends Component<SpaceProps> {
     private renderImage() {
-        if (this.props.photoUrl) {
-            return <img src={this.props.photoUrl} alt='Space'/>
+        if (this.props.photoURL) {
+            return <img src={this.props.photoURL} alt='Space'/>
         }
         else {
             return <img src={genericImage} alt='Space'/>

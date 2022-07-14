@@ -3,6 +3,7 @@ import { DataService } from "../../services/DataService";
 import { Space } from "../../model/Model";
 import {Space as SpaceComponent} from './Space'
 import {ConfirmModalComponent} from './ConfirmModalComponent'
+import { Link } from "react-router-dom";
 
 interface SpacesState {
  spaces: Space[]
@@ -28,6 +29,7 @@ export class Spaces extends Component<SpacesProps, SpacesState> {
 
      async componentDidMount() {
         const spaces = await this.props.dataService.getSpaces()
+        console.log(spaces)
         this.setState({
             spaces: spaces
         })
@@ -53,7 +55,7 @@ export class Spaces extends Component<SpacesProps, SpacesState> {
         const rows: any[] = []
         for (const space of this.state.spaces) {
             rows.push(
-                <SpaceComponent location={space.location} name={space.name} spaceId={space.spaceId} reserveSpace={this.reserveSpace}/>
+                <SpaceComponent location={space.location} name={space.name} spaceId={space.spaceId} photoURL={space.photoURL} reserveSpace={this.reserveSpace}/>
             )
         }
         return rows
@@ -70,6 +72,8 @@ export class Spaces extends Component<SpacesProps, SpacesState> {
          return (
          <div>
             <h2>Welcome to the Spaces page!</h2>
+            <Link to="/create-space">Create space</Link>
+            <br/>
             {this.renderSpaces()}
             <ConfirmModalComponent close={this.closeModal} content={this.state.modalContent} show={this.state.showModal}/>
          </div>

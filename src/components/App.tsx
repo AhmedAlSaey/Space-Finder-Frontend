@@ -9,6 +9,7 @@ import { Home } from './Home';
 import { Profile } from './Profile';
 import {Spaces} from './spaces/Spaces'
 import { DataService } from '../services/DataService';
+import { CreateSpace } from './spaces/CreateSpace';
 
 
 interface AppState {
@@ -28,10 +29,11 @@ export class App extends React.Component<{}, AppState> {
     this.setUser = this.setUser.bind(this)
   }
 
-  private setUser(user: User) {
+  private async setUser(user: User) {
     this.setState({
       user: user
     })
+    await this.authService.getAWSTemporaryCreds(user.cognitoUser)
    
     console.log('Setting the user: ', user)
   }
@@ -47,6 +49,7 @@ export class App extends React.Component<{}, AppState> {
               <Route path='/login' element={<Login authService={this.authService} setUser={this.setUser}/>}/>
               <Route path='/profile' element={<Profile authService={this.authService} user={this.state.user}/>}/>
               <Route path='/spaces' element={<Spaces dataService={this.dataService}/>}/>
+              <Route path='/create-space' element={<CreateSpace dataService={this.dataService}/>}/>
             </Routes>
           </div>
         </HistoryRouter>
